@@ -29,18 +29,20 @@ public class DBConnection {
         mongoClient = new MongoClient(uri);
     }
 
-    public ArrayList<String[]> get10(){
+    public ArrayList<String> get10(){
+        System.out.println("1.");
         MongoDatabase database = mongoClient.getDatabase("Lab");
         MongoCollection<Document> collection =database.getCollection("logs");
         FindIterable fit = collection.find();
         ArrayList<Document> docs = new ArrayList<Document>();
-        ArrayList<String[]> results = new ArrayList<>();
+        ArrayList<String> results = new ArrayList<>();
         fit.into(docs);
         int count = docs.size();
+        System.out.println(count);
         for (int i =0;i<10;i++) {
-            if (docs.get(count).get("mensaje")!= null && docs.get(count).get("fecha")!=null){
-                results.add(new String[]{docs.get(count).get("mensaje").toString(), docs.get(count).get("fecha").toString()});
-            }
+            System.out.println("2");
+            results.add(docs.get(count).toJson());
+            System.out.println(docs.get(count).toJson());
             count-=1;
         }
         return results;
