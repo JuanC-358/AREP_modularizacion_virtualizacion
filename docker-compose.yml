@@ -23,5 +23,3 @@ volumes:
     mongodb:
     mongodb_config:
 
-10 Ejecute el docker compose:
-docker-compose up -d
