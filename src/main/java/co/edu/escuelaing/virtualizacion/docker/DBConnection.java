@@ -30,21 +30,26 @@ public class DBConnection {
     }
 
     public ArrayList<String> get10(){
-        System.out.println("1.");
         MongoDatabase database = mongoClient.getDatabase("Lab");
         MongoCollection<Document> collection =database.getCollection("logs");
         FindIterable fit = collection.find();
         ArrayList<Document> docs = new ArrayList<Document>();
         ArrayList<String> results = new ArrayList<>();
         fit.into(docs);
-        int count = docs.size();
-        System.out.println(count);
-        for (int i =0;i<10;i++) {
-            System.out.println("2");
-            results.add(docs.get(count).toJson());
-            System.out.println(docs.get(count).toJson());
-            count-=1;
+        int count = docs.size()-10;
+        if(docs.size() >= 10){ 
+            for (int i = 0; i < 10; i++) {
+                System.out.println("2");
+                results.add(docs.get(count).toJson());
+                System.out.println(docs.get(count).toJson());
+                count += 1;
+            }
+        }else{
+            for (int i = 0 ; i < docs.size() ; i++ ) {
+                results.add(docs.get(i).toJson());
+            }
         }
+        
         return results;
     }
 
